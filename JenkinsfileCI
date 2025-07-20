@@ -35,26 +35,23 @@ pipeline{
             steps{
                 sh """
                 zip -q -r CI-${appVersion}.zip * -x Jenkinsfile -x CI-${appVersion}.zip
-                pwd
                 ls -ltr
                 """
             }
         }
-        /*
         stage('Docker build'){
             steps{
                 sh """
                     aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com
 
-                    docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion} .
+                    docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/expense-CI:${appVersion} .
 
                     
-                    docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/expense-backend:${appVersion}
+                    docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/expense-CI:${appVersion}
 
                 """
             }
         }
-        */
     }
     post { 
         always { 
