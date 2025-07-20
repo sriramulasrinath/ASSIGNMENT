@@ -54,9 +54,8 @@ pipeline{
         }
         stage('Deploy to Staging') {
             steps {
-            sshagent (credentials: ['ssh-authentication']) {
                 sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@172.31.92.135 << EOF
+                    ssh -o StrictHostKeyChecking=no ec2-user@172.31.26.89 << EOF
                     aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.${region}.amazonaws.com
                     
                     docker rm -f assignment || true
@@ -65,7 +64,7 @@ pipeline{
                     docker run -d --name assignment-staging -p 8080:8080 ${account_id}.dkr.ecr.${region}.amazonaws.com/assignment:${appVersion}
                     EOF
                 """
-                }
+                
             }
         }
     }
