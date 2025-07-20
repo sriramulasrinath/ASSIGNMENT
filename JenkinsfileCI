@@ -52,6 +52,18 @@ pipeline{
                 """
             }
         }
+        stage('Sonar Scan') {
+             environment {
+                 scannerHome = tool 'sonar-6.0' 
+             }
+             steps {
+                 script {
+                     withSonarQubeEnv('sonar-6.0') { 
+                         sh "${scannerHome}/bin/sonar-scanner"
+                     }
+                 }
+             }
+         }
         /*
         stage('Approval Before Deploying to Staging') {
             steps {
