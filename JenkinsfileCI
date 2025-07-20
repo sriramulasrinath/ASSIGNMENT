@@ -52,6 +52,14 @@ pipeline{
                 """
             }
         }
+        /*
+        stage('Approval Before Deploying to Staging') {
+            steps {
+                script {
+                    input message: "Do you want to deploy version ${appVersion} to Staging?", ok: 'Deploy'
+                }
+            }
+        } */
         stage('Deploy to Staging') {
             steps {
                 sh """
